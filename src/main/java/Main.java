@@ -1,4 +1,4 @@
-import Models.Player;
+import FifaDB.Models.Player;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jaunt.UserAgent;
@@ -15,7 +15,9 @@ public class Main {
         Gson gson = builder.create();
 
         userAgent.visit("https://www.easports.com/uk/fifa/ultimate-team/api/fut/item?jsonParamObject=%7B%22page%22:1,%22name%22:%22messi%22,%22position%22:%22LF,CF,RF,ST,LW,LM,CAM,CDM,CM,RM,RW,LWB,LB,CB,RB,RWB%22%7D");
-        Player player = gson.fromJson(userAgent.json.get("items").get(0).toString(), Player.class);//visit google
-        System.out.println(player.getHeadshotImgUrl());
+        String jsonString = userAgent.json.get("items").get(0).toString();
+        System.out.println(jsonString);
+        Player player = gson.fromJson(jsonString, Player.class);//visit google
+        System.out.println(player.getClub().getImageUrls().getNormal().getLargeImageUrl());
     }
 }
