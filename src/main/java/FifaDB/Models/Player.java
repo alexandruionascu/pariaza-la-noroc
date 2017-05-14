@@ -9,12 +9,48 @@ public class Player {
 
     private String commonName;
     private String firstName;
+    private String name;
+    private boolean isSpecialType;
+    private String positionFull;
+    private String baseId;
     private String headshotImgUrl;
     private League league;
     private Nation nation;
     private Club club;
     private String position;
     private int rating;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isSpecialType() {
+        return isSpecialType;
+    }
+
+    public void setSpecialType(boolean specialType) {
+        isSpecialType = specialType;
+    }
+
+    public String getPositionFull() {
+        return positionFull;
+    }
+
+    public void setPositionFull(String positionFull) {
+        this.positionFull = positionFull;
+    }
+
+    public String getBaseId() {
+        return baseId;
+    }
+
+    public void setBaseId(String baseId) {
+        this.baseId = baseId;
+    }
 
     public League getLeague() {
         return league;
