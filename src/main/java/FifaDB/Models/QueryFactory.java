@@ -1,5 +1,7 @@
 package FifaDB.Models;
 
+import FifaDB.Constants;
+
 /**
  * Created by faraonul on 5/14/17.
  */

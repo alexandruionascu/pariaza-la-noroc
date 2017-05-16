@@ -1,5 +1,7 @@
 package FifaDB.Models;
 
+import com.google.gson.Gson;
+
 /**
  * Created by faraonul on 5/13/17.
  */
@@ -32,4 +34,8 @@ public class QueryObject {
     }
 
     private String position;
+
+    public String toString() {
+        return new Gson().toJson(this).toString();
+    }
 }

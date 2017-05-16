@@ -1,4 +1,4 @@
-package FifaDB.Models;
+package FifaDB;
 
 import javax.print.DocFlavor;
 
@@ -47,5 +47,8 @@ public class Constants {
     public static String getAllPositions() {
         return String.join(",", ALL_POSITIONS);
     }
+    public static final String FIFA_DB_URL = "https://www.easports.com/uk/fifa/ultimate-team/api/fut/item";
+    public static final String JSON_PARAM_OBJECT = "jsonParamObject";
+    public static final String DEFAULT_ENCODING = "UTF-8";
 
 }
