@@ -1,4 +1,5 @@
 import BetRadar.Controllers.BetRadar;
+import BetRadar.Models.Fixture;
 import BetRadar.Models.Team;
 
 
@@ -7,7 +8,9 @@ import BetRadar.Models.Team;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        BetRadar.getInstance().getSerieAFixtures("2697");
+        for(Fixture fixture : BetRadar.getInstance().getSerieAFixtures("2697")) {
+            System.out.println(fixture.getHomeTeam());
+        }
         for(Team t : BetRadar.getInstance().getPremierLeagueTeams()) {
             System.out.println(t.getId() + " - " + t.getName());
         }

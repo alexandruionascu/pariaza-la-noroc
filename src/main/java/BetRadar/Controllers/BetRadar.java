@@ -1,5 +1,6 @@
 package BetRadar.Controllers;
-
+import BetRadar.Models.Fixture;
+import BetRadar.Models.FixtureBuilder;
 import BetRadar.Models.Team;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,29 +70,30 @@ public class BetRadar {
         return getTeams(SERIE_A_URL);
     }
 
-    public String getPremierLeagueTeamFixtures(String teamID) {
+    public List<Fixture> getPremierLeagueTeamFixtures(String teamID) {
         return getFixtures(PREMIER_LEAGUE_PREFIX, teamID);
     }
 
-    public String getLaLigaTeamFixtures(String teamID) {
+    public List<Fixture> getLaLigaTeamFixtures(String teamID) {
         return getFixtures(LA_LIGA_PREFIX, teamID);
     }
 
-    public String getBundesligaFixtures(String teamID) {
+    public List<Fixture> getBundesligaFixtures(String teamID) {
         return getFixtures(BUNGESLIGA_PREFIX, teamID);
     }
 
-    public String getSerieAFixtures(String teamID) {
+    public List<Fixture> getSerieAFixtures(String teamID) {
         return getFixtures(SERIA_A_PREFIX, teamID);
     }
 
-    private String getFixtures(String prefix, String teamID) {
+    private List<Fixture> getFixtures(String prefix, String teamID) {
         driver.get(prefix + teamID);
         WebDriverWait wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(LAST_X_CLASS)));
         WebElement downArrow = driver.findElement(By.cssSelector(ARROW_DOWN_SELECTOR));
         int previousHash = 0;
         boolean scrolledBottom = false;
+        List<Fixture> fixtures = new ArrayList<Fixture>();
         while(!scrolledBottom) {
             int currentHash = 0;
             //get the elements
@@ -98,16 +101,24 @@ public class BetRadar {
             for(WebElement tableRow : elements) {
                 String text = tableRow.getText().trim();
                 if(text.length() > 0) {
-                    //String[] matchData = text.split(" ");
-                    //String date = matchData[0];
-                    //String homeTeam = matchData[1];
-                    //String awayTeam = matchData[3];
-                    // String score = matchData[4];
-                    // String fixtureNo = matchData[5];
+                    String[] matchData = text.split("\n");
+                    String date = matchData[0];
+                    String[] teams = matchData[1].split("-");
+                    String homeTeam = teams[0].trim();
+                    String awayTeam = teams[1].trim();
+                    String[] score = matchData[2].split(" ");
+                    int scoredHome = Integer.valueOf(score[0].split(":")[0]);
+                    int scoredAway = Integer.valueOf(score[0].split(":")[1]);
+                    int round = Integer.valueOf(score[1]);
+                    fixtures.add(new FixtureBuilder()
+                            .date(date)
+                            .homeTeam(homeTeam)
+                            .awayTeam(awayTeam)
+                            .homeScored(scoredHome)
+                            .awayScored(scoredAway)
+                            .round(round)
+                            .build());
 
-
-                    System.out.println(text);
-                    System.out.println("--------------");
                     currentHash += text.hashCode();
                 }
             }
@@ -119,14 +130,16 @@ public class BetRadar {
 
 
 
-            if(previousHash == currentHash)
+            if(previousHash == currentHash) {
                 scrolledBottom = true;
+            }
+
 
             previousHash = currentHash;
 
         }
 
-        return "BLAT";
+        return fixtures;
     }
 
 
