@@ -2,8 +2,6 @@ package DbManager;
 
 import BetRadar.Controllers.BetRadar;
 import BetRadar.Models.Team;
-import com.couchbase.client.core.logging.CouchbaseLogLevel;
-import com.couchbase.client.core.logging.CouchbaseLogger;
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.CouchbaseCluster;
 import com.couchbase.client.java.document.JsonDocument;
@@ -17,9 +15,9 @@ import java.util.List;
  * Created by faraonul on 5/20/17.
  */
 public class DbManager {
-    private static final String HOST = "127.0.0.1";
-    private static final String DEFAULT_BUCKET = "default";
-    private static final String TEAM_PREFIX = "team_";
+    public static final String HOST = "127.0.0.1";
+    public static final String DEFAULT_BUCKET = "default";
+    public static final String TEAM_PREFIX = "team_";
 
     public static void main(String[] args) throws  Exception {
         updatePremierLeagueTeams();
