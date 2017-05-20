@@ -11,13 +11,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by faraonul on 5/19/17.
  */
 public class BetRadar {
-    private static BetRadar instance = null;
-    private BetRadar() {}
+
 
     private final int DEFAULT_TIMEOUT = 15;
     private final String LEAGUE_TABLE_CLASS = "normaltable";
@@ -33,10 +33,13 @@ public class BetRadar {
     private final String HREF = "href";
     private final int ID_INDEX = 3;
     private final String LAST_X_CLASS = "couch_lastx";
+    private final String LAST_X_TR = ".couch_lastx tbody tr";
     private final String ARROW_DOWN_SELECTOR = ".couch_lastx tfoot";
 
     private static final WebDriver driver = new ChromeDriver();
 
+    private static BetRadar instance = null;
+    private BetRadar() {}
 
     public static BetRadar getInstance() {
         if(instance == null) {
@@ -45,13 +48,18 @@ public class BetRadar {
         return instance;
     }
 
+
     private Team[] getTeams(String url) {
-        driver.get(url);
-        WebDriverWait wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(LEAGUE_TABLE_CLASS)));
-        List<WebElement> elements = driver.findElements(By.cssSelector(LEAGUE_TABLE_SELECTOR));
-        return elements.stream().map(e -> new Team(e.getText(),
-                e.getAttribute(HREF).split("'")[ID_INDEX])).toArray(Team[]::new);
+        try {
+            driver.get(url);
+            WebDriverWait wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(LEAGUE_TABLE_CLASS)));
+            List<WebElement> elements = driver.findElements(By.cssSelector(LEAGUE_TABLE_SELECTOR));
+            return elements.stream().map(e -> new Team(e.getText(),
+                    e.getAttribute(HREF).split("'")[ID_INDEX])).toArray(Team[]::new);
+        } catch (Exception ex) {
+            return getTeams(url);
+        }
     }
 
     public Team[] getPremierLeagueTeams() {
@@ -97,7 +105,7 @@ public class BetRadar {
         while(!scrolledBottom) {
             int currentHash = 0;
             //get the elements
-            List<WebElement> elements = driver.findElements(By.cssSelector(".couch_lastx tbody tr"));
+            List<WebElement> elements = driver.findElements(By.cssSelector(LAST_X_TR));
             for(WebElement tableRow : elements) {
                 String text = tableRow.getText().trim();
                 if(text.length() > 0) {
