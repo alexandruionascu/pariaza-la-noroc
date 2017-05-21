@@ -2,6 +2,7 @@ package BetRadar.Controllers;
 import BetRadar.Models.Fixture;
 import BetRadar.Models.FixtureBuilder;
 import BetRadar.Models.Team;
+import org.apache.commons.lang3.ArrayUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -36,6 +37,8 @@ public class BetRadar {
     private final String LAST_X_CLASS = "couch_lastx";
     private final String LAST_X_TR = ".couch_lastx tbody tr";
     private final String ARROW_DOWN_SELECTOR = ".couch_lastx tfoot";
+    private final String[] LEAGUE_URLS = {PREMIER_LEAGUE_URL, LA_LIGA_URL, BUNDESLIGA_URL, SERIE_A_URL};
+    private final String[] LEAGUE_PREFIXES = {PREMIER_LEAGUE_PREFIX, LA_LIGA_PREFIX, BUNGESLIGA_PREFIX, SERIA_A_PREFIX};
 
     private static final WebDriver driver = new ChromeDriver();
 
@@ -61,6 +64,19 @@ public class BetRadar {
         } catch (Exception ex) {
             return getTeams(url);
         }
+    }
+
+    public Team[] getAllTeams() {
+        Team[] teams = {};
+        try {
+            for(String leagueUrl : LEAGUE_URLS) {
+                teams = (Team[]) ArrayUtils.addAll(teams, getTeams(leagueUrl));
+            }
+        } catch (Exception ex) {
+            return  getAllTeams();
+        }
+
+        return teams;
     }
 
     public Team[] getPremierLeagueTeams() {
