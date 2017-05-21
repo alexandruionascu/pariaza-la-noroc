@@ -10,6 +10,7 @@ public class Fixture {
     private int homeScored;
     private int awayScored;
     private int round;
+    private String location;
 
     public Fixture() {}
     public Fixture(FixtureBuilder builder) {
@@ -19,6 +20,7 @@ public class Fixture {
         this.homeScored = builder.getHomeScored();
         this.awayScored = builder.getAwayScored();
         this.round = builder.getRound();
+        this.location = builder.getLocation();
     }
 
     public String getDate() {
@@ -49,6 +51,14 @@ public class Fixture {
         return homeScored;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public void setHomeScored(int homeScored) {
         this.homeScored = homeScored;
     }
@@ -68,4 +78,6 @@ public class Fixture {
     public void setRound(int round) {
         this.round = round;
     }
+
+
 }
