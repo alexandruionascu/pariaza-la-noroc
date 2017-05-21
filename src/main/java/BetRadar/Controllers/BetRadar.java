@@ -3,6 +3,7 @@ import BetRadar.Models.Fixture;
 import BetRadar.Models.FixtureBuilder;
 import BetRadar.Models.Team;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -96,6 +97,7 @@ public class BetRadar {
 
     private List<Fixture> getFixtures(String prefix, String teamID) {
         driver.get(prefix + teamID);
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
         WebDriverWait wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(LAST_X_CLASS)));
         WebElement downArrow = driver.findElement(By.cssSelector(ARROW_DOWN_SELECTOR));
@@ -106,6 +108,10 @@ public class BetRadar {
             int currentHash = 0;
             //get the elements
             List<WebElement> elements = driver.findElements(By.cssSelector(LAST_X_TR));
+            List<WebElement> as = driver.findElements(By.cssSelector(LAST_X_TR + " a"));
+            for(WebElement a : as) {
+                System.out.println(a.getAttribute(HREF));
+            }
             for(WebElement tableRow : elements) {
                 String text = tableRow.getText().trim();
                 if(text.length() > 0) {
@@ -128,6 +134,7 @@ public class BetRadar {
                             .build());
 
                     currentHash += text.hashCode();
+                    executor.executeScript("javascript:s4.deeplink('matchid', 9599817, '')");
                 }
             }
 
