@@ -1,8 +1,6 @@
 package Server; /**
  * Created by faraonul on 5/20/17.
  */
-import BetRadar.Controllers.BetRadar;
-import DbManager.DbManager;
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.CouchbaseCluster;
 import spark.Spark;

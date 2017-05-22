@@ -2,8 +2,9 @@ import BetRadar.Controllers.BetRadar;
 import BetRadar.Models.Fixture;
 import BetRadar.Models.Team;
 import com.google.gson.Gson;
-import info.debatty.java.stringsimilarity.JaroWinkler;
 
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Created by faraonul on 5/13/17.
@@ -11,14 +12,24 @@ import info.debatty.java.stringsimilarity.JaroWinkler;
 public class Main {
     public static void main(String[] args) throws Exception {
         Gson gson = new Gson();
-        System.out.println(gson.toJson(BetRadar.getInstance().getSerieATeams()));
-        System.out.println(gson.toJson(BetRadar.getInstance().getPremierLeagueTeams()));
-        System.out.println(gson.toJson(BetRadar.getInstance().getLaLigaTeams()));
-        System.out.println(gson.toJson(BetRadar.getInstance().getBundesligaTeams()));
-        System.out.println(gson.toJson(BetRadar.getInstance().getLaLigaTeamFixtures("2817")));
-        System.out.println(new JaroWinkler().distance(
-                "Man Utd",
-                "ManchesterUnited"
-        ));
+        Team[] teams = BetRadar.getInstance().getAllTeams();
+        for(Team team : teams) {
+            team.setFixtures(BetRadar.getInstance().getFixtures(team));
+        }
+        PrintWriter out = new PrintWriter("data.json");
+        out.print(gson.toJson(teams));
+        System.out.println("here");
+        out.close();
+        //for(Team t :  teams) {
+            //System.out.println(t.getId());
+        //}
+
+        //List<Fixture> fixtures = BetRadar.getInstance().getPremierLeagueTeamFixtures("42");
+        //for(Fixture fixture : fixtures) {
+        //    System.out.println(fixture.getHomeTeam() + " - "  + fixture.getAwayTeam() + " " + String.valueOf(fixture.getRound()) + "-" + fixture.getLocation());
+        //}
+
+        //System.out.println(gson.toJson(teams[0]));
+
     }
 }
