@@ -36,6 +36,6 @@ public class QueryObject {
     private String position;
 
     public String toString() {
-        return new Gson().toJson(this).toString();
+        return new Gson().toJson(this);
     }
 }

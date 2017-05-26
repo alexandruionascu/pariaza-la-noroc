@@ -1,4 +1,6 @@
-package Reactor.EventLoop;
+package ReactorIO.EventLoop;
+
+import ReactorIO.Config;
 
 import java.util.concurrent.*;
 
@@ -9,7 +11,7 @@ public class EventLoop {
     private static EventLoop instance = null;
     private ExecutorService threadPool;
     private EventLoop() {
-         threadPool = Executors.newFixedThreadPool(10);
+         threadPool = Executors.newFixedThreadPool(Config.NUMBER_OF_THREADS);
     }
 
     public CompletableFuture<Void> runAsync(Runnable runnable) {
@@ -24,7 +26,7 @@ public class EventLoop {
     }
 
 
-    public static <T> CompletableFuture<T> makeCompletable(Future<T> future) {
+    public static CompletableFuture makeCompletable(Future future) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return future.get();

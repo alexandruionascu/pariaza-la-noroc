@@ -49,7 +49,7 @@ public class DbManager {
         JsonTranscoder transcoder = new JsonTranscoder();
         Gson gson = new Gson();
         for(Team team : teams) {
-            JsonObject teamObj = transcoder.stringToJsonObject(gson.toJson(team).toString());
+            JsonObject teamObj = transcoder.stringToJsonObject(gson.toJson(team));
             bucket.upsert(JsonDocument.create(TEAM_PREFIX + team.getId(), teamObj));
         }
 
