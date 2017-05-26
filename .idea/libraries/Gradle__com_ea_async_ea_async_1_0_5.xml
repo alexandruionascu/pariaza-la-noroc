@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.ea.async:ea-async:1.0.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ea.async/ea-async/1.0.5/68882f740367852f224683cf49be77a23b1b24dd/ea-async-1.0.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ea.async/ea-async/1.0.5/e3b04592d415bbc5579919882a6fc5fb6659a36d/ea-async-1.0.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

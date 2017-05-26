@@ -5,8 +5,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by faraonul on 5/21/17.
@@ -227,11 +230,12 @@ public class BossServerSocket {
     }
 
     public static void main(String[] args) throws Exception {
+        String data  = new String(Files.readAllBytes(Paths.get("data.json")));
         BossServerSocket server = new BossServerSocket(4321);
         server.debugMode = false;
         while(true) {
             server.acceptClient(1);
-            server.sendMessageToAllClients("BOSS" + new Random().toString());
+            server.sendMessageToAllClients(data);
             Thread.sleep(2000);
             //server.sendMessageLineForClient(0,  "BOSS");
             //String messageReceived = awesomeServer.readMessageLineForClient(index);
