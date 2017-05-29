@@ -6,9 +6,6 @@ import ReactorIO.Event;
 import ReactorIO.EventLoop.EventLoop;
 import ReactorIO.Reactor;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -16,7 +13,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 
@@ -114,7 +110,7 @@ public class ReactorServer {
     public static void main(String[] args) throws Exception {
         ReactorServer server = new ReactorServer("localhost", 8000);
         server.on("connected", event -> {
-            System.out.println("MY FUNCT " + event.getData());
+            System.out.println("my callback " + event.getData());
             event.getReactor().emit("custom_event", "response from server");
         });
         await(server.listen());
